@@ -10,10 +10,14 @@ public class Zombies : MonoBehaviour
 	public GameObject hitbox;
 	public GameObject player;
 	public Sprite zombie;
+	public SceneRotation sr;
+
+	private Vector2 rightStick;
 
 	// Use this for initialization
 	void Start () 
 	{
+		sr = GameObject.Find ("Main Camera").GetComponent<SceneRotation> ();
 		StartCoroutine (Invincible ());
 	}
 	
@@ -38,6 +42,9 @@ public class Zombies : MonoBehaviour
 			{
 				this.gameObject.transform.Translate (0, -1 * speed * Time.deltaTime, 0);
 			}
+
+			rightStick = GamePad.GetStick(CStick.Right);
+			this.gameObject.transform.Translate (rightStick.x * speed * Time.deltaTime, -1 * rightStick.y * speed * Time.deltaTime, 0);
 		} 
 		else 
 		{
@@ -59,14 +66,30 @@ public class Zombies : MonoBehaviour
 	{
 		if (col.tag == "Dracula")
 		{
+			gm.bloodLeft += 5;
+			if (gm.bloodLeft > 100) 
+			{
+				gm.bloodLeft = 100.00f;
+			}
+			gm.UpdateVictims ();
 			col.GetComponentInParent<Dracula> ().BiteNoise ();
 			gm.UpdateScore (50);
 			Destroy (this.gameObject);
 		} 
 		else if(col.tag == "Bite") 
 		{
+			gm.bloodLeft += 5;
+			if (gm.bloodLeft > 100) 
+			{
+				gm.bloodLeft = 100.00f;
+			}
+			gm.UpdateVictims ();
 			col.gameObject.GetComponentInParent<Dracula> ().BiteNoise ();
 			TurnZombie ();
+		}
+		else if (col.tag == "BackGround") 
+		{
+			this.transform.parent = col.gameObject.transform;
 		}
 	}
 

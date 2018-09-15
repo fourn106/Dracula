@@ -5,6 +5,7 @@ using UnityEngine;
 public class Constable : MonoBehaviour 
 {
 	public bool canThrow = true;
+	public bool dead = false;
 	public float speed;
 	public GameObject baton;
 	public GameObject player;
@@ -21,35 +22,38 @@ public class Constable : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (this.transform.position.x > oldPosition) 
+		if (!dead) 
 		{
-			direction = 1;	
-		} 
-		else 
-		{
-			direction = -1;	
-		}
-		oldPosition = this.transform.position.x;
-
-		this.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, player.transform.position, speed * Time.deltaTime);
-
-		if (direction == 1) 
-		{
-			if (Mathf.Abs(player.transform.position.x - this.transform.position.x) < 6 && canThrow)
+			if (this.transform.position.x > oldPosition) 
 			{
-				StartCoroutine (ThrowWait ());
-				GameObject newBaton = Instantiate(baton, this.transform.position, this.transform.rotation);
-				newBaton.gameObject.GetComponent<Baton> ().direction = direction;
+				direction = 1;	
+			} 
+			else 
+			{
+				direction = -1;	
 			}
-		}
-		else if (direction == -1) 
-		{
-			if (Mathf.Abs(player.transform.position.x - this.transform.position.x) < 6 && canThrow)
+			oldPosition = this.transform.position.x;
+
+			this.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, player.transform.position, speed * Time.deltaTime);
+
+			if (direction == 1) 
 			{
-				StartCoroutine (ThrowWait ());
-				GameObject newBaton = Instantiate(baton, this.transform.position, this.transform.rotation);
-				newBaton.gameObject.GetComponent<Baton> ().direction = direction;
-				newBaton.gameObject.GetComponent<SpriteRenderer> ().flipX = true;
+				if (Mathf.Abs(player.transform.position.x - this.transform.position.x) < 6 && canThrow)
+				{
+					StartCoroutine (ThrowWait ());
+					GameObject newBaton = Instantiate(baton, this.transform.position, this.transform.rotation);
+					newBaton.gameObject.GetComponent<Baton> ().direction = direction;
+				}
+			}
+			else if (direction == -1) 
+			{
+				if (Mathf.Abs(player.transform.position.x - this.transform.position.x) < 6 && canThrow)
+				{
+					StartCoroutine (ThrowWait ());
+					GameObject newBaton = Instantiate(baton, this.transform.position, this.transform.rotation);
+					newBaton.gameObject.GetComponent<Baton> ().direction = direction;
+					newBaton.gameObject.GetComponent<SpriteRenderer> ().flipX = true;
+				}
 			}
 		}
 	}
@@ -59,7 +63,11 @@ public class Constable : MonoBehaviour
 		if (col.tag == "Zombie")
 		{
 			gm.UpdateScore (75);
-			Destroy (this.gameObject);
+			StartCoroutine (Respawn ());
+		}
+		else if (col.tag == "BackGround") 
+		{
+			this.transform.parent = col.gameObject.transform;
 		}
 	}
 
@@ -68,5 +76,14 @@ public class Constable : MonoBehaviour
 		canThrow = false;
 		yield return new WaitForSeconds (3f);
 		canThrow = true;
+	}
+
+	public IEnumerator Respawn()
+	{
+		this.GetComponent<SpriteRenderer> ().enabled = false;
+		dead = true;
+		yield return new WaitForSeconds (15f);
+		this.GetComponent<SpriteRenderer> ().enabled = true;
+		dead = false;
 	}
 }

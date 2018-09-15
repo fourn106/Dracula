@@ -9,47 +9,58 @@ public class Vulture : MonoBehaviour
 	public float oldPosition;
 	public float speed;
 	public GameObject player;
+	public GameObject mainCamera;
+	public bool alive = false;
 
 	// Use this for initialization
 	void Start () 
 	{
 		StartCoroutine (Caw ());
 		player = GameObject.FindGameObjectWithTag ("Dracula");
+		mainCamera = GameObject.Find ("Main Camera");
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (this.transform.position.x > oldPosition) 
+		if (alive) 
 		{
-			direction = 1;	
-		} 
-		else 
-		{
-			direction = -1;	
-		}
-		oldPosition = this.transform.position.x;
-		if (direction == 1) 
-		{
-			this.gameObject.GetComponent<SpriteRenderer> ().flipX = true;
-		} 
-		else 
-		{
-			this.gameObject.GetComponent<SpriteRenderer> ().flipX = false;
-		}
+			if (this.transform.position.x > oldPosition) 
+			{
+				direction = 1;	
+			} 
+			else 
+			{
+				direction = -1;	
+			}
+			oldPosition = this.transform.position.x;
+			if (direction == 1) 
+			{
+				this.gameObject.GetComponent<SpriteRenderer> ().flipX = true;
+			} 
+			else 
+			{
+				this.gameObject.GetComponent<SpriteRenderer> ().flipX = false;
+			}
 
-		if (player.GetComponent<Dracula>().bat && !holding) 
-		{
-			this.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, player.transform.position, speed * Time.deltaTime);
-		}
-		else 
-		{
-			this.transform.Translate(Vector2.right * Time.deltaTime * speed * direction);
-		}
+			if (player.GetComponent<Dracula>().bat && !holding) 
+			{
+				this.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, player.transform.position, speed * Time.deltaTime);
+			}
+			else 
+			{
+				this.transform.Translate(Vector2.right * Time.deltaTime * speed * direction);
+				if (Vector2.Distance(this.gameObject.transform.position, player.transform.position) > 15f) 
+				{
+					this.transform.parent = mainCamera.transform;
+					this.gameObject.SetActive (false);
+				}
+			}
 
-		if (!player.GetComponent<Dracula>().bat) 
-		{
-			holding = false;
+			if (!player.GetComponent<Dracula>().bat) 
+			{
+				holding = false;
+			}
 		}
 	}
 

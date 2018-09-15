@@ -44,12 +44,24 @@ public class Wolf : MonoBehaviour
 		else 
 		{
 			this.transform.Translate(Vector2.right * Time.deltaTime * speed * direction);
+			if (Vector2.Distance(this.gameObject.transform.position, player.transform.position) > 10f) 
+			{
+				Destroy (this.gameObject);
+			}
 		}
 	}
 
 	public void RunAway()
 	{
 		runningAway = true;
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.tag == "BackGround") 
+		{
+			this.transform.parent = col.gameObject.transform;
+		}
 	}
 
 	public IEnumerator Bark()

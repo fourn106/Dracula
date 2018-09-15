@@ -13,6 +13,8 @@ TagManager:
   - Vulture
   - Stick
   - Bite
+  - Coffin
+  - BackGround
   layers:
   - Default
   - TransparentFX
@@ -50,6 +52,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: SetPieces
+    uniqueID: 831614357
+    locked: 0
+  - name: BackHouse
+    uniqueID: 3430925875
+    locked: 0
+  - name: MiddleHouse
+    uniqueID: 1674308641
+    locked: 0
+  - name: FrontHouse
+    uniqueID: 1604062263
+    locked: 0
   - name: Characters
     uniqueID: 633973837
+    locked: 0
+  - name: Sidewalk
+    uniqueID: 1378900875
+    locked: 0
+  - name: Curb
+    uniqueID: 1995532355
+    locked: 0
+  - name: Street
+    uniqueID: 3786675839
     locked: 0

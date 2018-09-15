@@ -70,13 +70,17 @@
      <Compile Include="Assets\CarbonInput\Scripts\TouchInput\TouchButton.cs" />
      <Compile Include="Assets\CarbonInput\Scripts\TouchInput\TouchMapping.cs" />
      <Compile Include="Assets\CarbonInput\Scripts\TouchInput\TouchStick.cs" />
+     <Compile Include="Assets\Scripts\Background.cs" />
      <Compile Include="Assets\Scripts\Baton.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Cemetery.cs" />
      <Compile Include="Assets\Scripts\Constable.cs" />
      <Compile Include="Assets\Scripts\Door.cs" />
      <Compile Include="Assets\Scripts\Dracula.cs" />
      <Compile Include="Assets\Scripts\DraculaHitbox.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\SceneRotation.cs" />
      <Compile Include="Assets\Scripts\Vulture.cs" />
      <Compile Include="Assets\Scripts\Wolf.cs" />
      <Compile Include="Assets\Scripts\ZombieHitbox.cs" />
@@ -85,10 +89,10 @@
      <None Include="Assets\CarbonInput\Gizmos\readme.txt" />
      <None Include="Assets\CarbonInput\readme.txt" />
  <Reference Include="UnityEditor.StandardEvents">
- <HintPath>E:/UnityScenes/Intellivision Dracula/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ <HintPath>E:/UnityScenes/Dracula/Intellivision Dracula/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>E:/UnityScenes/Intellivision Dracula/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>E:/UnityScenes/Dracula/Intellivision Dracula/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>E:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

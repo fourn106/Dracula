@@ -58,10 +58,10 @@
      <Compile Include="Assets\CarbonInput\Editor\CarbonSettingsEditor.cs" />
      <Compile Include="Assets\CarbonInput\Editor\ReInitEditor.cs" />
  <Reference Include="UnityEditor.StandardEvents">
- <HintPath>E:/UnityScenes/Intellivision Dracula/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ <HintPath>E:/UnityScenes/Dracula/Intellivision Dracula/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>E:/UnityScenes/Intellivision Dracula/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>E:/UnityScenes/Dracula/Intellivision Dracula/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>E:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

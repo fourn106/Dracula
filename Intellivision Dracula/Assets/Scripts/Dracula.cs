@@ -15,15 +15,21 @@ public class Dracula : MonoBehaviour
 	public Sprite dracula;
 	public Sprite wings;
 
+	public GameManager gm;
+
+	private Vector2 leftStick;
+
 	// Use this for initialization
 	void Start () 
 	{
 		audio = this.GetComponent<AudioSource> ();
+		gm = GameObject.Find ("Main Camera").GetComponent<GameManager> ();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		GamePadState state = GamePad.GetState ();
 		if (!stunned) 
 		{
 			if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.W)) 
@@ -42,19 +48,21 @@ public class Dracula : MonoBehaviour
 			{
 				this.gameObject.transform.Translate (0, -1 * speed * Time.deltaTime, 0);
 			}
+			leftStick = GamePad.GetStick(CStick.Left);
+			this.gameObject.transform.Translate (leftStick.x * speed * Time.deltaTime, -1 * leftStick.y * speed * Time.deltaTime, 0);
 
 
-			if (Input.GetKeyDown (KeyCode.Q)) 
+			if (Input.GetKeyDown (KeyCode.Q) || state.Pressed(CButton.B)) 
 			{
 				StartCoroutine (ActivateHitbox ());
 			}
-			if (Input.GetKeyDown(KeyCode.E)) 
+			if (Input.GetKeyDown(KeyCode.E) || state.Pressed(CButton.A)) 
 			{
 				StartCoroutine (BiteHitbox ());
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.Space)) 
+		if (Input.GetKeyDown(KeyCode.Space) || state.Pressed(CButton.X)) 
 		{
 			if (!bat) 
 			{
@@ -108,7 +116,7 @@ public class Dracula : MonoBehaviour
 		stunned = false;
 	}
 
-	void OnTriggerStay2D(Collider2D col)
+	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (!bat) 
 		{
@@ -121,7 +129,7 @@ public class Dracula : MonoBehaviour
 			else if (col.tag == "Dog") 
 			{
 				StartCoroutine (Stunned ());
-				col.gameObject.GetComponent<Wolf> ().RunAway ();
+				col.transform.GetComponentInParent<Wolf> ().RunAway ();
 			}
 		} 
 		else 
@@ -131,6 +139,18 @@ public class Dracula : MonoBehaviour
 				stunned = true;
 				col.gameObject.GetComponent<Vulture> ().Holding (this.gameObject);
 			}
+		}
+
+		if (col.tag == "Coffin") 
+		{
+			if (gm.victimsLeft == 0 || gm.CheckTime()) 
+			{
+				gm.StartCoroutine (gm.OutroCutscene ());
+			}
+		}
+		else if (col.tag == "BackGround") 
+		{
+			col.GetComponent<Background> ().MoveBG ();
 		}
 	}
 }
